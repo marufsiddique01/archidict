@@ -118,7 +118,13 @@ To create a comprehensive architecture dictionary that serves as a valuable educ
 
 ## Usage Guide
 
-### Frontend Usage
+### Frontend 
+
+![Home Page](screenshots/root.png)
+*ArchiDict Home*
+
+<img src="screenshots/frontend.png" alt="Book Interface" width="700">
+*ArchiDict Dictionary Interface*
 
 1. **Home Page**:
    - The landing page (`/index.php`) provides access to both the frontend dictionary and admin dashboard.
@@ -142,7 +148,9 @@ To create a comprehensive architecture dictionary that serves as a valuable educ
    - Access architectural newsletters from the Newsletters page (`/frontend/newsletters.php`).
    - Download newsletters in PDF format.
 
-### Admin Usage
+### Admin Panel
+
+![Admin Dashboard](screenshots/admin.png)
 
 1. **Login**:
    - Access the admin dashboard at `/admin/index.php`.
