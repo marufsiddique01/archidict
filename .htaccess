@@ -1,0 +1,13 @@
+# Simple Apache Configuration File
+Options -Indexes
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# Increase upload size limits
+<IfModule mod_php.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+</IfModule>
