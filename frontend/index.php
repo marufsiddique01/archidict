@@ -7,12 +7,77 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include initialization file
-require_once 'includes/init.php';
+// Function to handle fatal errors gracefully
+function handleFatalErrors() {
+    $error = error_get_last();
+    if ($error && ($error['type'] === E_ERROR || $error['type'] === E_PARSE)) {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo '<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Error - ArchiDict</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body class="bg-light">
+            <div class="container py-5">
+                <div class="card border-danger shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h1 class="h4 mb-0">Application Error</h1>
+                    </div>
+                    <div class="card-body">
+                        <p>Sorry, we encountered a problem loading this page. Our team has been notified.</p>
+                        <p><strong>Error details:</strong> ' . htmlspecialchars($error['message']) . ' in ' . htmlspecialchars($error['file']) . ' on line ' . $error['line'] . '</p>
+                        <hr>
+                        <a href="../index.php" class="btn btn-primary">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>';
+        exit;
+    }
+}
 
-// Create instances
-$termObj = new Term();
-$newsletterObj = new Newsletter();
+// Register shutdown function to catch fatal errors
+register_shutdown_function('handleFatalErrors');
+
+try {
+    // Include initialization file
+    require_once __DIR__ . '/includes/init.php';
+    
+    // Create instances
+    $termObj = new Term();
+    $newsletterObj = new Newsletter();
+} catch (Exception $e) {
+    header("HTTP/1.1 500 Internal Server Error");
+    echo '<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Error - ArchiDict</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-light">
+        <div class="container py-5">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h1 class="h4 mb-0">Application Error</h1>
+                </div>
+                <div class="card-body">
+                    <p>Sorry, we encountered a problem loading this page. Our team has been notified.</p>
+                    <p><strong>Error details:</strong> ' . htmlspecialchars($e->getMessage()) . '</p>
+                    <hr>
+                    <a href="../index.php" class="btn btn-primary">Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>';
+    exit;
+}
 
 // Get featured terms (random selection)
 $featuredTerms = $termObj->getRandomTerms(6);
@@ -25,7 +90,7 @@ $currentPage = 'home';
 $pageTitle = 'Home';
 
 // Include header template
-include 'includes/header.php';
+include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Hero Section -->
@@ -147,5 +212,5 @@ include 'includes/header.php';
 
 <?php
 // Include footer template
-include 'includes/footer.php';
+include __DIR__ . '/includes/footer.php';
 ?>

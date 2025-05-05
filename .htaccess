@@ -1,13 +1,26 @@
-# Simple Apache Configuration File
-Options -Indexes
-AddDefaultCharset UTF-8
+# Simple direct redirects (doesn't require mod_rewrite)
+# If mod_rewrite is not enabled, this approach will still work
 
 <IfModule mod_rewrite.c>
+    # Redirect old pages to new frontend structure
     RewriteEngine On
+    
+    # Only redirect if the requested file isn't found
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Redirect old direct file paths to the frontend directory
+    RewriteRule ^dictionary\.php$ frontend/dictionary.php [L,R=301]
+    RewriteRule ^term\.php$ frontend/term.php [L,R=301]
+    RewriteRule ^search\.php$ frontend/search.php [L,R=301]
+    RewriteRule ^newsletters\.php$ frontend/newsletters.php [L,R=301]
+    RewriteRule ^about\.php$ frontend/about.php [L,R=301]
 </IfModule>
 
-# Increase upload size limits
-<IfModule mod_php.c>
-    php_value upload_max_filesize 10M
-    php_value post_max_size 10M
+# Direct redirects as fallback
+<IfModule !mod_rewrite.c>
+    # PHP redirect fallback
+    <Files "index.php">
+        # This is just a placeholder - we'll handle redirects in PHP if needed
+    </Files>
 </IfModule>

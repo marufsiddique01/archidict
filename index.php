@@ -13,6 +13,23 @@ define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/archidict/');
 define('FRONTEND_URL', SITE_URL . 'frontend/');
 define('ADMIN_URL', SITE_URL . 'admin/');
 
+// Handle redirects for old URLs (in case .htaccess isn't working)
+$redirect_map = [
+    '/dictionary.php' => 'frontend/dictionary.php',
+    '/term.php' => 'frontend/term.php',
+    '/search.php' => 'frontend/search.php',
+    '/newsletters.php' => 'frontend/newsletters.php',
+    '/about.php' => 'frontend/about.php'
+];
+
+$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$script_name = basename($request_uri);
+
+if (array_key_exists($script_name, $redirect_map)) {
+    header('Location: ' . SITE_URL . $redirect_map[$script_name] . (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+    exit;
+}
+
 // Set page information
 $pageTitle = 'Welcome to ArchiDict';
 ?>

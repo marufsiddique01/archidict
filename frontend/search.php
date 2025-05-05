@@ -4,7 +4,7 @@
  */
 
 // Include initialization file
-require_once 'includes/init.php';
+require_once __DIR__ . '/includes/init.php';
 
 // Create Term instance
 $termObj = new Term();
@@ -25,7 +25,7 @@ $pageHeader = 'Search Results';
 $pageDescription = !empty($searchQuery) ? 'Results for "' . htmlspecialchars($searchQuery) . '"' : 'Search for architectural terms';
 
 // Include header template
-include 'includes/header.php';
+include __DIR__ . '/includes/header.php';
 ?>
 
 <div class="row">
@@ -97,5 +97,5 @@ include 'includes/header.php';
 
 <?php
 // Include footer template
-include 'includes/footer.php';
+include __DIR__ . '/includes/footer.php';
 ?>

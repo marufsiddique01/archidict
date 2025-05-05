@@ -4,7 +4,7 @@
  */
 
 // Include initialization file
-require_once 'includes/init.php';
+require_once __DIR__ . '/includes/init.php';
 
 // Create Term instance
 $termObj = new Term();
@@ -31,7 +31,7 @@ $pageHeader = 'Architecture Dictionary';
 $pageDescription = 'Browse all architecture terms in our comprehensive dictionary.';
 
 // Include header template
-include 'includes/header.php';
+include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Alphabet Navigation -->
@@ -216,5 +216,5 @@ window.addEventListener('resize', function() {
 
 <?php
 // Include footer template
-include 'includes/footer.php';
+include __DIR__ . '/includes/footer.php';
 ?>
