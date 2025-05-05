@@ -276,5 +276,3 @@ Default admin credentials:
 It is strongly recommended to change these credentials after initial login for security purposes.
 
 ---
-
-© ArchiDict - Architecture Dictionary
